@@ -24,7 +24,6 @@ test-results/
 playwright-report/
 blob-report/
 coverage/
-docs/article/
 docs/test-results.json
 docs/performance.json
 docs/large-screen-check.json
