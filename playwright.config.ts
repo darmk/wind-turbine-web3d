@@ -1,0 +1,2 @@
+import {defineConfig} from '@playwright/test';
+export default defineConfig({testDir:'./tests',timeout:60000,workers:1,reporter:[['list'],['json',{outputFile:'docs/test-results.json'}]],use:{baseURL:process.env.TEST_URL||'http://127.0.0.1:5173',channel:'msedge',headless:true,viewport:{width:1600,height:1000},launchOptions:{args:['--enable-webgl','--ignore-gpu-blocklist']},screenshot:'only-on-failure'},outputDir:'test-results'});

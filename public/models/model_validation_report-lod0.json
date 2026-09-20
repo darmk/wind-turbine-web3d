@@ -1,0 +1,38 @@
+{
+  "phase": 8,
+  "passed": true,
+  "errors": [],
+  "mesh_objects": 367,
+  "unique_meshes": 88,
+  "triangles_before_instancing": 94444,
+  "units": "metres",
+  "blender_up": "Z",
+  "gltf_up": "Y",
+  "rotor_axis": "X",
+  "negative_scales": 0,
+  "textures": 0,
+  "uv": "Generated planar fallback; untextured PBR",
+  "empty_objects": "Named intentional assembly/pivot nodes",
+  "origin": "Assembly local pivots; rotor centred at hub",
+  "collections": [
+    "Detail_Collection",
+    "Foundation_Collection",
+    "Nacelle_Collection",
+    "Rotor_Collection",
+    "Tower_Collection"
+  ],
+  "geometry_facts": {
+    "hub_height_m": 130.0,
+    "blade_angles_deg": [
+      0.0,
+      120.0,
+      240.0
+    ],
+    "blade_tip_radii_m": [
+      90.550014,
+      90.550006,
+      90.550006
+    ],
+    "measured_swept_diameter_m": 181.100028
+  }
+}

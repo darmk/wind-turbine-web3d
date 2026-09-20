@@ -1,0 +1,32 @@
+[
+  {
+    "path": "public/models/en182-5mw.glb",
+    "passed": true,
+    "bytes": 458096,
+    "components": 24,
+    "nodes": 406,
+    "meshes": 88,
+    "uniqueTriangles": 88864,
+    "materials": 9
+  },
+  {
+    "path": "public/models/en182-5mw-lod1.glb",
+    "passed": true,
+    "bytes": 363012,
+    "components": 24,
+    "nodes": 298,
+    "meshes": 88,
+    "uniqueTriangles": 58384,
+    "materials": 9
+  },
+  {
+    "path": "public/models/en182-5mw-lod2.glb",
+    "passed": true,
+    "bytes": 237448,
+    "components": 24,
+    "nodes": 226,
+    "meshes": 88,
+    "uniqueTriangles": 26600,
+    "materials": 9
+  }
+]

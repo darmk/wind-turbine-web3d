@@ -1,0 +1,2 @@
+<script setup lang="ts">defineProps<{progress:number;error:string}>();defineEmits<{retry:[]}>();</script>
+<template><div class="loading-screen" role="status" aria-live="polite"><div class="loading-orbit"><span/></div><h2>{{error?'Model Load Failed':'正在构建数字视界'}}</h2><p>{{error||'载入参数化模型与工业材质'}}</p><template v-if="!error"><div class="loading-track"><span :style="{width:progress+'%'}"/></div><strong>{{progress}}<small>%</small></strong></template><button v-else class="primary-button" @click="$emit('retry')">重新加载</button></div></template>

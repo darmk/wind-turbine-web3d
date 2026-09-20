@@ -1,0 +1,17 @@
+{
+  "name": "en182-wind-turbine",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=16.15.0" },
+  "scripts": {
+    "postinstall": "node scripts/prepare-assets.cjs",
+    "dev": "node scripts/run.cjs vite --host 127.0.0.1",
+    "build": "node scripts/run.cjs vue-tsc --noEmit && node scripts/run.cjs vite build",
+    "preview": "node scripts/run.cjs vite preview --host 127.0.0.1",
+    "check:model": "node scripts/run.cjs tsx scripts/check-model.ts",
+    "test": "node scripts/run.cjs playwright test"
+  },
+  "dependencies": { "vue": "3.5.13", "three": "0.170.0", "gsap": "3.12.5", "@lucide/vue": "1.45.0" },
+  "devDependencies": { "@vitejs/plugin-vue": "6.0.8", "vite": "8.3.0", "typescript": "5.6.3", "vue-tsc": "2.2.0", "@types/three": "0.170.0", "@types/node": "22.20.2", "tsx": "4.23.13", "@playwright/test": "1.63.0" }
+}

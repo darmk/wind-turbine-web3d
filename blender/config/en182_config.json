@@ -1,0 +1,54 @@
+{
+  "model": "EN-182/5.0",
+  "rated_power_mw": 5,
+  "rotor_diameter_m": 181.1,
+  "blade_count": 3,
+  "blade_length_m": 89,
+  "hub_height_m": 130,
+  "gearbox": "WE7200Y",
+  "generator": "DFIG",
+  "export": {"draco":true},
+  "parameter_sources": {
+    "rated_power_mw": {"source": "S1", "classification": "OFFICIAL", "estimated": false},
+    "rotor_diameter_m": {"source": "S1", "classification": "OFFICIAL", "estimated": false},
+    "hub_height_m": {"source": "S1", "classification": "OFFICIAL", "estimated": false},
+    "blade_length_m": {"source": "user nominal value, exact dimension not disclosed in S1/S2", "classification": "ENGINEERING-ESTIMATE", "estimated": true},
+    "gearbox": {"source": "S2", "classification": "PUBLIC-REFERENCE", "estimated": false},
+    "generator": {"source": "S1", "classification": "OFFICIAL", "estimated": false}
+  },
+  "engineering": {
+    "estimated": true,
+    "source": "engineering-estimate",
+    "foundation_radius_m": 7.2,
+    "foundation_height_m": 1.3,
+    "tower_base_radius_m": 3.2,
+    "tower_top_radius_m": 1.8,
+    "tower_wall_m": 0.12,
+    "tower_sections": 4,
+    "nacelle_length_m": 15.5,
+    "nacelle_width_m": 5.6,
+    "nacelle_height_m": 5.5,
+    "rotor_overhang_m": 6.4,
+    "shaft_radius_m": 0.52,
+    "gearbox_length_m": 3.4,
+    "gearbox_radius_m": 1.35,
+    "generator_length_m": 3.3,
+    "generator_radius_m": 1.15,
+    "blade_stations": [
+      {"span":0,"chord":2.9,"thickness":1,"twist":18,"sweep":0},
+      {"span":0.035,"chord":3.1,"thickness":0.85,"twist":17,"sweep":0},
+      {"span":0.10,"chord":4.7,"thickness":0.46,"twist":15,"sweep":-0.2},
+      {"span":0.20,"chord":5.25,"thickness":0.30,"twist":12,"sweep":-0.4},
+      {"span":0.38,"chord":4.3,"thickness":0.23,"twist":8,"sweep":-0.3},
+      {"span":0.58,"chord":3.1,"thickness":0.19,"twist":5,"sweep":0.0},
+      {"span":0.78,"chord":1.9,"thickness":0.16,"twist":2,"sweep":0.7},
+      {"span":0.94,"chord":0.75,"thickness":0.13,"twist":0,"sweep":1.8},
+      {"span":1,"chord":0.08,"thickness":0.12,"twist":-1,"sweep":2.3}
+    ]
+  },
+  "lod": {
+    "0": {"radial":64,"blade_span":100,"blade_profile":48,"bolts":32,"rollers":20},
+    "1": {"radial":40,"blade_span":64,"blade_profile":32,"bolts":20,"rollers":14},
+    "2": {"radial":20,"blade_span":32,"blade_profile":16,"bolts":12,"rollers":10}
+  }
+}

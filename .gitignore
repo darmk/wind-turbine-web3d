@@ -1,0 +1,51 @@
+# Node.js dependencies and build output
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Local environment, editor state, and operating-system files
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Package-manager and runtime logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Playwright and local QA output
+test-results/
+playwright-report/
+blob-report/
+coverage/
+docs/article/
+docs/test-results.json
+docs/performance.json
+docs/large-screen-check.json
+docs/height-140-check.json
+docs/desktop.png
+docs/exploded.png
+docs/gearbox.png
+docs/large-screen.png
+docs/mobile.png
+docs/phase9.png
+docs/section.png
+docs/transparent.png
+docs/xray.png
+
+# Local design-review material (not runtime or source documentation)
+design-qa.md
+docs/technology-blue-redesign.md
+
+# Blender backup files, Python bytecode, and one-off inspection artifacts
+*.blend1
+*.blend2
+__pycache__/
+*.py[cod]
+.tools/

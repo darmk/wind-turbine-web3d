@@ -1,0 +1,32 @@
+<script setup lang="ts">
+import {ref,computed} from 'vue';import {Wind,Maximize,Rotate3d,Focus,Camera,Move,Mouse,Box,PanelLeftClose,PanelLeftOpen,ArrowUpRight,RotateCcw} from '@lucide/vue';
+import TurbineViewer from './components/TurbineViewer.vue';import ComponentTree from './components/ComponentTree.vue';import InfoPanel from './components/InfoPanel.vue';import Toolbar from './components/Toolbar.vue';
+import {componentMap} from './data/components';import {displayModelName,initialRotorSpeed,type ViewMode,type Axis} from './data/turbine';import './styles/theme.css';
+import './styles/command-center.css';
+const viewer=ref<InstanceType<typeof TurbineViewer>>();const selected=ref('turbine');const mode=ref<ViewMode>('normal');const level=ref(0);const paused=ref(false);const running=ref(true);const speed=ref(initialRotorSpeed);const autoRotate=ref(false);const axis=ref<Axis>('X');const section=ref(50);const lod=ref(innerWidth<768?2:innerWidth<1200?1:0);const ready=ref(false);const hidden=ref<string[]>([]);const isolated=ref(false);const fps=ref(0);const calls=ref(0);const triangles=ref(0);const revision=ref(0);const showTree=ref(false);const notice=ref('');
+const current=computed(()=>componentMap.get(selected.value)!);
+function select(id:string){selected.value=id;showTree.value=false;if(isolated.value){viewer.value?.isolate();isolated.value=false;}}
+function reset(){selected.value='turbine';mode.value='normal';level.value=0;paused.value=false;running.value=false;speed.value=initialRotorSpeed;autoRotate.value=false;axis.value='X';section.value=50;viewer.value?.reset();}
+function setLevel(n:number){running.value=false;paused.value=false;level.value=n;}
+function internals(){mode.value='xray';select('nacelle');}
+function quality(e:Event){reset();ready.value=false;lod.value=Number((e.target as HTMLSelectElement).value);}
+async function fullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{notice.value='浏览器未允许全屏，可使用 F11。';}}
+</script>
+<template><div class="application">
+ <header class="app-header"><div class="identity"><div class="identity-mark"><Wind :size="27" :stroke-width="1.4"/></div><div><strong>风机数字样机<span> / 能源指挥中心</span></strong><small>WIND ENERGY · ENGINEERING EXPLORER</small></div></div><nav><span class="nav-active">三维总览</span><button :disabled="!ready" @click="internals">结构探索<ArrowUpRight :size="13"/></button></nav><div class="header-status"><i/><span>{{!ready?'模型载入中':running?`运行中 · ${speed}× 演示`:'模型就绪'}}</span><span class="header-divider"/><button class="icon-button" aria-label="切换全屏" @click="fullscreen"><Maximize :size="17"/></button></div></header>
+ <div class="workspace"><div class="mobile-tree-toggle"><button class="icon-button" aria-label="切换部件树" @click="showTree=!showTree"><PanelLeftClose v-if="showTree"/><PanelLeftOpen v-else/></button></div>
+  <main class="viewport">
+   <TurbineViewer ref="viewer" :key="`${lod}-${revision}`" :selected="selected" :mode="mode" :level="level" :paused="paused" :running="running" :speed="speed" :auto-rotate="autoRotate" :axis="axis" :section="section" :lod="lod" @select="select" @ready="ready=$event" @stats="(f,c,t)=>{fps=f;calls=c;triangles=t;}" @hidden="hidden=$event" @isolated="isolated=$event" @retry="revision++"/>
+   <div class="viewport-heading"><div class="breadcrumb">STRUCTURE EXPLORER <span>/ 01</span></div><p>{{selected==='turbine'?'整机视图':current.name}}<span>·</span>实时三维展示</p><strong class="mobile-model-name">{{displayModelName}}</strong></div>
+   <div class="viewport-topright"><span class="view-badge"><Box :size="12"/>{{mode==='normal'?'PBR 实体':mode==='transparent'?'外壳透视':mode==='xray'?'X-RAY':'实时剖切'}}</span><label class="quality-select"><select :value="lod" aria-label="模型精度" @change="quality"><option :value="0">LOD 0 · 精细</option><option :value="1">LOD 1 · 均衡</option><option :value="2">LOD 2 · 轻量</option></select></label></div>
+   <div class="viewport-tools"><button class="icon-button" :disabled="!ready" aria-label="整机适配视图" title="整机适配视图" @click="viewer?.fit()"><Focus :size="17"/></button><button class="icon-button" :disabled="!ready" :class="{active:autoRotate}" :aria-pressed="autoRotate" aria-label="自动环绕" title="自动环绕" @click="autoRotate=!autoRotate"><Rotate3d :size="18"/></button><button class="icon-button" :disabled="!ready" aria-label="保存模型截图" title="保存模型截图" @click="viewer?.capture()"><Camera :size="17"/></button><span/><button class="icon-button" :disabled="!ready" aria-label="恢复整机视图" title="恢复整机" @click="reset"><RotateCcw :size="16"/></button></div>
+   <div v-if="mode==='section'" class="section-control"><div><span>剖切平面</span><small>Y 轴为高度</small><button v-for="a in (['X','Y','Z'] as const)" :key="a" :class="{active:axis===a}" @click="axis=a">{{a}}</button></div><label><input v-model.number="section" type="range" min="0" max="100" aria-label="剖切位置"/><output>{{section}}%</output></label></div>
+   <div v-if="isolated" class="isolation-tag">单独查看 · {{current.name}}<button @click="viewer?.isolate()">退出 ×</button></div>
+   <div class="viewport-bottom"><span><Mouse :size="13"/>左键旋转<span class="dot">·</span>滚轮缩放<span class="dot">·</span><Move :size="13"/>右键平移</span><small>1 UNIT = 1 METER</small></div>
+   <div v-if="notice" class="notice" role="status" @click="notice=''">{{notice}}</div>
+  </main>
+  <InfoPanel :class="{'mobile-open':showTree}" :selected="selected" :isolated="isolated" :ready="ready" @focus="viewer?.focus()" @isolate="viewer?.isolate()" @internals="internals"><template #structure><ComponentTree :class="{'mobile-open':showTree}" :selected="selected" :hidden="hidden" @select="select" @focus="selected=$event;viewer?.focus()" @toggle="viewer?.toggle($event)"/></template></InfoPanel>
+ </div>
+ <Toolbar :mode="mode" :level="level" :paused="paused" :running="running" :speed="speed" :ready="ready" @mode="mode=$event" @level="setLevel" @pause="paused=!paused" @rotor="running=!running" @stop="running=false;viewer?.stop()" @speed="speed=$event" @reset="reset"/>
+ <div class="status-bar"><span><i/>公开资料数字重建 <em>·</em> 几何含工程近似</span><span class="status-performance"><b>{{fps}}</b> FPS <em>/</em> {{calls}} DRAWS <em>/</em> {{(triangles/1000).toFixed(1)}} K TRI <em>/</em> WebGL 2</span><span>{{displayModelName}} <em>·</em> REV 01.00</span></div>
+</div></template>
