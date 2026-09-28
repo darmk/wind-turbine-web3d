@@ -3,6 +3,7 @@ import {appendFileSync,writeFileSync} from 'node:fs';
 import {PerspectiveCamera,Vector3} from 'three';
 type Snapshot={selected:string;mode:string;level:number;lod:number;hidden:string[];isolated:string|null;rotor:number[];positions:Record<string,number[]>;camera:number[];target:number[];clipping:number;meshCount:number;stageVisible:boolean;sweptDisk:number[][]};
 const snapshot=(page:Page)=>page.evaluate(()=> (window as unknown as {turbineDiagnostics:()=>Snapshot}).turbineDiagnostics());
+test.beforeEach(async({page})=>{await page.addInitScript(()=>localStorage.setItem('darmk:windpowerweb3d:follow-gate:v1','granted'));});
 async function ready(page:Page){await page.goto('/');await expect(page.locator('.three-host')).toHaveAttribute('data-ready','true',{timeout:30000});}
 function log(phase:number,text:string){appendFileSync('docs/development-log.md',`\n\n## Phase ${phase} — 浏览器实际验证\n\n${text}\n`);}
 test('Phase 10: selection, focus, hide and isolate',async({page})=>{

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {ref,computed} from 'vue';import {Wind,Maximize,Rotate3d,Focus,Camera,Move,Mouse,Box,PanelLeftClose,PanelLeftOpen,ArrowUpRight,RotateCcw} from '@lucide/vue';
-import TurbineViewer from './components/TurbineViewer.vue';import ComponentTree from './components/ComponentTree.vue';import InfoPanel from './components/InfoPanel.vue';import Toolbar from './components/Toolbar.vue';
+import TurbineViewer from './components/TurbineViewer.vue';import ComponentTree from './components/ComponentTree.vue';import InfoPanel from './components/InfoPanel.vue';import Toolbar from './components/Toolbar.vue';import FollowGate from './components/FollowGate.vue';
 import {componentMap} from './data/components';import {displayModelName,initialRotorSpeed,type ViewMode,type Axis} from './data/turbine';import './styles/theme.css';
 import './styles/command-center.css';
-const viewer=ref<InstanceType<typeof TurbineViewer>>();const selected=ref('turbine');const mode=ref<ViewMode>('normal');const level=ref(0);const paused=ref(false);const running=ref(true);const speed=ref(initialRotorSpeed);const autoRotate=ref(false);const axis=ref<Axis>('X');const section=ref(50);const lod=ref(innerWidth<768?2:innerWidth<1200?1:0);const ready=ref(false);const hidden=ref<string[]>([]);const isolated=ref(false);const fps=ref(0);const calls=ref(0);const triangles=ref(0);const revision=ref(0);const showTree=ref(false);const notice=ref('');
+const viewer=ref<InstanceType<typeof TurbineViewer>>();const selected=ref('turbine');const mode=ref<ViewMode>('normal');const level=ref(0);const paused=ref(false);const running=ref(true);const speed=ref(initialRotorSpeed);const autoRotate=ref(false);const axis=ref<Axis>('X');const section=ref(50);const lod=ref(innerWidth<768?2:innerWidth<1200?1:0);const ready=ref(false);const hidden=ref<string[]>([]);const isolated=ref(false);const fps=ref(0);const calls=ref(0);const triangles=ref(0);const revision=ref(0);const showTree=ref(false);const notice=ref('');const hasFollowAccess=ref(false);
 const current=computed(()=>componentMap.get(selected.value)!);
 function select(id:string){selected.value=id;showTree.value=false;if(isolated.value){viewer.value?.isolate();isolated.value=false;}}
 function reset(){selected.value='turbine';mode.value='normal';level.value=0;paused.value=false;running.value=false;speed.value=initialRotorSpeed;autoRotate.value=false;axis.value='X';section.value=50;viewer.value?.reset();}
@@ -12,7 +12,7 @@ function internals(){mode.value='xray';select('nacelle');}
 function quality(e:Event){reset();ready.value=false;lod.value=Number((e.target as HTMLSelectElement).value);}
 async function fullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{notice.value='浏览器未允许全屏，可使用 F11。';}}
 </script>
-<template><div class="application">
+<template><FollowGate v-if="!hasFollowAccess" @enter="hasFollowAccess=true"/><div v-else class="application">
  <header class="app-header"><div class="identity"><div class="identity-mark"><Wind :size="27" :stroke-width="1.4"/></div><div><strong>风机数字样机<span> / 能源指挥中心</span></strong><small>WIND ENERGY · ENGINEERING EXPLORER</small></div></div><nav><span class="nav-active">三维总览</span><button :disabled="!ready" @click="internals">结构探索<ArrowUpRight :size="13"/></button></nav><div class="header-status"><i/><span>{{!ready?'模型载入中':running?`运行中 · ${speed}× 演示`:'模型就绪'}}</span><span class="header-divider"/><button class="icon-button" aria-label="切换全屏" @click="fullscreen"><Maximize :size="17"/></button></div></header>
  <div class="workspace"><div class="mobile-tree-toggle"><button class="icon-button" aria-label="切换部件树" @click="showTree=!showTree"><PanelLeftClose v-if="showTree"/><PanelLeftOpen v-else/></button></div>
   <main class="viewport">
