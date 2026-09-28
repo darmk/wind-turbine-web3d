@@ -4,7 +4,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 
 export class ModelLoader {
-  private draco = new DRACOLoader().setDecoderPath('/draco/');
+  private draco = new DRACOLoader().setDecoderPath(`${import.meta.env.BASE_URL}draco/`);
   private loader = new GLTFLoader().setDRACOLoader(this.draco).setMeshoptDecoder(MeshoptDecoder);
   async load(url: string, progress: (n:number)=>void) {
     progress(0);

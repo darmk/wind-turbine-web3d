@@ -6,9 +6,24 @@
 
 它适合用于设备结构讲解、展厅/大屏演示、培训和远程沟通；不用于制造、强度校核、认证、施工或运维决策。
 
-![风机数字样机整机界面](docs/article/assets/wind-turbine-overview.png)
+> **在线预览：[https://demo.darmk.com.cn/windpowerweb3d/](https://demo.darmk.com.cn/windpowerweb3d/)**  
+> 建议使用开启硬件加速的 Chrome、Edge 或 Firefox。首次打开会加载三维模型和本地 Draco 解码器，请稍候片刻。
 
-*整机界面：部件树、实时 WebGL 视口、结构说明与控制台集中在同一屏。*
+## 关注公众号：程途漫记
+
+扫码关注 **程途漫记**，获取更多 AI、三维可视化与数字样机实践内容。
+
+<p align="center">
+  <img src="public/images/qrcode_for_gh_10e8400b2bfb_860.jpg" alt="程途漫记公众号二维码" width="220">
+</p>
+
+## 在线界面
+
+当前页面采用深蓝能源指挥中心风格：顶部提供模型状态与视图入口，中间保持沉浸式 WebGL 舞台，右侧以紧凑参数卡片、部件结构和说明面板组织信息，底部则集中放置显示、拆解和叶轮控制。
+
+![风机数字样机整机界面，线上版本截图，2026-09-28](docs/readme-assets/overview-2026-09-28.png)
+
+*线上版本整机界面，截图采集于 2026-09-28。模型状态、关键参数、部件树与交互控制保持在同一视图内。*
 
 ## 项目完成了什么
 
@@ -23,17 +38,9 @@
 |运行演示|叶轮启动、暂停、停止及 0.25/0.5/1/2 倍演示速度。|
 |多端适配|LOD 0/1/2 可手动切换；移动端默认加载轻量 LOD 2。|
 
-![机舱 X-Ray 与内部传动链](docs/article/assets/wind-turbine-nacelle-closeup.gif)
+![X-Ray 观察模式，线上版本截图，2026-09-28](docs/readme-assets/nacelle-xray-2026-09-28.png)
 
-*动态图：机舱外壳以 X-Ray 方式呈现，主轴、齿轮箱、发电机与控制部件仍可清楚观察。素材直接录制自项目页面。*
-
-![X-Ray 模式下的机舱内部](docs/article/assets/wind-turbine-xray.png)
-
-*机舱近景：选择部件后可聚焦到传动链，并通过半透明外壳查看内部空间关系。*
-
-![实时剖切模式](docs/article/assets/wind-turbine-section.png)
-
-*实时剖切：可在 X、Y、Z 三个方向移动裁切平面，观察机舱、叶轮与塔筒的内部关系。*
+*线上版本的 X-Ray 状态。底部模式栏可在实体、透视、X-Ray 与剖切之间切换；选择机舱后可继续聚焦、隔离或展开相应部件。*
 
 ### 模型事实
 

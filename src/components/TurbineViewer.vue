@@ -43,7 +43,7 @@ onMounted(async()=>{
  emit('ready',false);
  try{
   scene=new SceneManager(host.value!);scene.renderer.domElement.addEventListener('webglcontextlost',lost);scene.onStats=(...stats)=>emit('stats',...stats);
-  const suffix=props.lod===0?'':`-lod${props.lod}`;model=await loader.load(`/models/en182-5mw${suffix}.glb`,n=>progress.value=n);
+  const suffix=props.lod===0?'':`-lod${props.lod}`;model=await loader.load(`${import.meta.env.BASE_URL}models/en182-5mw${suffix}.glb`,n=>progress.value=n);
   if(disposed){model.traverse(o=>{if(o instanceof THREE.Mesh){o.geometry.dispose();(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose());}});return;}
   scene.scene.add(model);hierarchy=new ModelHierarchy(model);materials=new TransparencyManager(model);highlight=new HighlightManager(scene.outline);
   model.updateWorldMatrix(true,true);stage=new PresentationStage();scene.scene.add(stage);
